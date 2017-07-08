@@ -5,18 +5,12 @@ public:
             return {}; 
         }
 
-        vector<string> combinations;
+        vector<string> combinations = {""};
         int multiple = int();
 
         std::map<char, vector<string>> letterMap = {{'1', {}}, {'2', {"a", "b", "c"}}, {'3', {"d", "e", "f"}}, {'4', {"g", "h", "i"}}, {'5', {"j", "k", "l"}}, {'6', {"m", "n", "o"}}, {'7', {"p", "q", "r", "s"}}, {'8', {"t", "u", "v"}}, {'9', {"w", "x", "y", "z"}}};
 
-
-        //Seed vector with initial strings.
-        for(int i = 0; i < letterMap.at(digits.at(0)).size(); ++i){
-            combinations.push_back(letterMap.at(digits.at(0)).at(i));                 
-        }
-
-        for(int i = 1; i < digits.length(); ++i){
+        for(int i = 0; i < digits.length(); ++i){
             //iterate through digits, then iterate through mappings to digits
             auto pastLength = combinations.size();
             multiple = letterMap.at(digits.at(i)).size();
