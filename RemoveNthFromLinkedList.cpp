@@ -10,32 +10,28 @@ class Solution {
 public:
     ListNode* removeNthFromEnd(ListNode* head, int n) {
         ListNode* crawler = head;
-        ListNode* removalNode = head;
-        bool noWhile = true;
+        std::cout << "crawler has been initialized to " << crawler -> val << std::endl;
+        ListNode remove = ListNode(0);
+        ListNode* removalHead = &remove;
+        removalHead -> next = head;
+        std::cout << "removalHead has been initialized to " << removalHead -> val << " while next is " << removalHead -> next -> val << std::endl;
+        ListNode* removalNode = removalHead;
         //Go to nth node in the linked list
-        for(int i = 0; i < n && crawler -> next != nullptr; ++i){
+        for(int i = 0; i < n - 1 && crawler -> next != nullptr; ++i){
             crawler = crawler -> next; 
+            std::cout << "Crawler is now " << crawler -> next << std::endl;
         }
-        std::cout << "Crawler -> next is " << crawler -> next << std::endl;
+        //Start crawling through linked list with both crawler and removalnode.
         while(crawler -> next != nullptr){
-            noWhile = false;
             crawler = crawler -> next;
             removalNode = removalNode -> next;
+            std::cout << "Removal node is now " << removalNode -> val << std::endl;
         }       
-        if(noWhile){
-            head = head -> next; 
+        std::cout << "Removal -> next node is now " << removalNode -> next -> val << std::endl;
+        if(removalHead -> next == head){
+            return head -> next; 
         }
-        else{
-            ListNode* temp;
-            std::cout << removalNode -> val << std::endl;
-            if(removalNode -> next == nullptr){
-                temp = nullptr; 
-            }
-            else{
-                temp = removalNode -> next -> next;
-            }
-            removalNode -> next = temp;
-        }
+        removalNode -> next = removalNode -> next -> next;
         return head;
     }
 };
