@@ -1,31 +1,25 @@
 class Solution {
 public:
     vector<string> generateParenthesis(int n) {
-        std::stack<char> openStack;
-        std::stack<char> closeStack;
-        for(int i = 0; i < n; ++i){
-            openStack.push('('); 
-            closeStack.push(')');
-        }
-        std::vector<string> solution = {""};
-        while(!openStack.empty() || !closeStack.empty()){
-            std::vector<string> temp;
-            if(!openStack.empty()){
-                for(int i = 0; i < solution.size(); ++i){
-                    temp.push_back(solution.at(i) + openStack.top()); 
-                }
-                openStack.pop();
+        std::vector<std::string> solution;
+        addParen(solution, "", n, 0);
+        return solution; 
+    }
+
+    //Adds passed string to the solution vector. Keeps track of the number of open and closing parentheses. Calls itself depending on the number of available open
+    //and closing parentheses. 
+    void addParen(std::vector<std::string> &solution, std::string str, int openCount, int closeCount){
+        if(openCount == 0 && closeCount == 0){
+            solution.push_back(str); 
+        } 
+        else{
+            if(openCount > 0){
+                addParen(solution, str + "(", openCount - 1, closeCount + 1); 
             }
-            solution.swap(temp);
-            temp = {};
-            if(!closeStack.empty() && closeStack.size() > openStack.size()){
-                for(int i = 0; i < solution.size(); ++i){
-                    temp.push_back(solution.at(i) + closeStack.top()); 
-                }
-                closeStack.pop();
+            if(closeCount > 0){
+                addParen(solution, str + ")", openCount, closeCount - 1); 
             }
-            solution.swap(temp);
         }
-        return solution;
+        return;
     }
 };
