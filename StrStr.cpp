@@ -1,23 +1,13 @@
 class Solution {
 public:
     int strStr(string haystack, string needle) {
-        int substringLen = 1;
         if(needle == ""){
             return 0; 
         }
-        for(int i = 0; i + substringLen -1 < haystack.length();){
-            if(haystack.substr(i, substringLen) == needle.substr(0, substringLen)){
-                if(substringLen == needle.length()){
-                    return i; 
-                }
-                else{
-                    ++substringLen; 
-                }
+        for(int i = 0; i + needle.length() - 1 < haystack.length(); ++i){
+            if(haystack.substr(i, needle.length()) == needle){
+                return i;
             } 
-            else{
-                ++i;
-                substringLen = 1; 
-            }
         }
         return -1;
     }
