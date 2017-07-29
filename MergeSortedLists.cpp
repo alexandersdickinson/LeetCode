@@ -9,33 +9,32 @@
 class Solution {
 public:
     ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
-        ListNode* traverse1 = l1;
-        ListNode* traverse2 = l2;
-        //Assign starting value of merged list.
-        if(l1 == nullptr && l2 == nullptr){
-            return {}; 
-        }
-        else if(l1 == nullptr || l2 == nullptr){
-            return (l1 == nullptr) ? l2 : l1; 
-        }
-        ListNode* mergeHead = (l1 -> val >= l2 -> val) ? l2 : l1;
+        ListNode one = ListNode(0);
+        ListNode* traverse1 = &one;
+        traverse1 -> next = l1;
+
+        ListNode two = ListNode(0);
+        ListNode* traverse2 = &two;
+        traverse2 -> next = l2;
+
+        ListNode merge = ListNode(0);
+        ListNode* mergeHead = &merge;
         ListNode* mergeTraverse = mergeHead;
-        (l1 -> val >= l2 -> val) ? traverse2 = traverse2 -> next : traverse1 = traverse1 -> next;
+
+        ListNode* temp;
         while(traverse1 -> next != nullptr && traverse2 -> next != nullptr){
-            if(traverse1 -> val >= traverse2 -> val && traverse2 -> next != nullptr){
-                mergeTraverse -> next = traverse2;
+            if(traverse1 -> next -> val <= traverse2 -> next -> val){
+                traverse1 = traverse1 -> next;
+                temp = traverse1;
+            } 
+            else{
                 traverse2 = traverse2 -> next; 
+                temp = traverse2;
             }
-            else if(traverse1 -> next != nullptr){
-                mergeTraverse -> next = traverse1;
-                traverse1 = traverse1 -> next; 
-            }
+            mergeTraverse -> next = temp;
             mergeTraverse = mergeTraverse -> next;
-        }       
-        mergeTraverse = mergeTraverse -> next;
-        std::cout << "Traverse1 has untraversed elements: " << (traverse1 -> next != nullptr) << std::endl;
-        std::cout << "Traverse2 has untraversed elements: " << (traverse2 -> next != nullptr) << std::endl;
-        mergeTraverse -> next = (traverse1 -> next != nullptr && traverse2 -> next == nullptr) ? traverse1: traverse2;
-        return mergeHead;
+        }
+
+        return mergeHead -> next;
     }
 };
