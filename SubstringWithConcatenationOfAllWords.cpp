@@ -1,8 +1,8 @@
 class Solution {
 public:
     vector<int> findSubstring(string s, vector<string>& words) {
-        //iterate through string
         std::vector<int> solution;
+<<<<<<< HEAD
         std::vector<std::string> temp = words;
         int startingIndex; 
         bool match;
@@ -30,6 +30,29 @@ public:
                 solution.push_back(startingIndex);
                 temp = words;
                 i = startingIndex + 1;
+=======
+        //Number of words and the number of occurrences.
+        std::unordered_map<std::string, int> counts;
+        std::unordered_map<std::string, int> tempCounts;
+        int wordLen = words.at(0).length();
+        //Populate counts with words.
+        for(auto word = words.begin(); word != words.end(); ++word){
+            ++(counts[(*word)]); 
+        }
+        //Iterate through the string.
+        for(int i = 0; i < s.length() - wordLen * words.size() + 1; ++i){
+            tempCounts.clear();
+            for(int j = i; j - i < wordLen * words.size(); j += wordLen){
+                if(counts.find(s.substr(j, wordLen)) != counts.end()){
+                    ++(tempCounts[s.substr(j, wordLen)]);
+                }
+                else{
+                    break;
+                }
+            }
+            if(counts == tempCounts){
+                solution.push_back(i); 
+>>>>>>> c63642cdb3397ac153a2798e3fddf793b342108f
             }
         }
         return solution;
