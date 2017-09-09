@@ -4,7 +4,7 @@ public:
         //iterate through string
         std::vector<int> solution;
         std::vector<std::string> temp = words;
-        int startingIndex, firstMatchLength; 
+        int startingIndex; 
         bool match;
         for(int i = 0; i < s.length();){
             match = false;
@@ -16,7 +16,6 @@ public:
                     match = true;
                     if(temp.size() == words.size()){
                         startingIndex = i;
-                        firstMatchLength = (*it).length();
                     }
                     i += (*it).length();
                     it = temp.erase(it);
@@ -24,13 +23,13 @@ public:
                 }
             } 
             if(!match){
-                i = (temp.size() != words.size()) ? startingIndex + firstMatchLength : i + 1;
+                i = (temp.size() != words.size()) ? startingIndex + 1 : i + 1;
                 temp = words;
             }
             else if(temp.empty()){
                 solution.push_back(startingIndex);
                 temp = words;
-                i = startingIndex + firstMatchLength;
+                i = startingIndex + 1;
             }
         }
         return solution;
